@@ -1,9 +1,10 @@
+#!/usr/bin/env ruby
 require 'httparty'
 require 'nokogiri'
 
 response = HTTParty.get('https://www.nytimes.com/')
 
-num_articles = ARGV[0].to_i || 10
+num_articles = ARGV[0].to_i
 
 return if num_articles > 100 || num_articles < 1
 articles = Nokogiri::HTML(response).css('article')[(0...num_articles)]
