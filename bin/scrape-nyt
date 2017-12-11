@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'scraper'
+
+options = { number_of_articles: 10 }
+OptionParser.new do |opts|
+  opts.banner = "Usage: scrape.rb [options]"
+
+  opts.on("-n", "--number-of-articles Number", "Number of articles to scrape") do |num|
+    unless num.to_i > 100 || num.to_i < 1
+      options[:number_of_articles] = num.to_i
+    else
+      puts "Too many, try a number less that 100" if num > 100
+      puts "Too few, try a number greater than 0" if num < 0
+      exit
+    end
+  end
+
+  opts.on("-d", "--directory Directory", "Directory you want the stories to be written to") do |dir|
+    if Dir.exist?(dir)
+      options[:directory] = dir.chomp('/') + '/'
+    else
+      puts "Directory does not exist. Exiting"
+      exit
+    end
+  end
+
+  opts.on("-h", "--help", "Help!") do
+    puts opts
+    exit
+  end
+end.parse!
+
+Scraper.new('https://www.nytimes.com/', options[:number_of_articles], options[:directory]).scrape

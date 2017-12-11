@@ -1,7 +1,13 @@
 ### How to
 
-From your console:
+Install:
 
 ```
-ruby scrape.rb <num of articles>
+gem install nyt-scraper-0.0.1.gem
+```
+
+Then run:
+
+```
+scrape-nyt -h
 ```
